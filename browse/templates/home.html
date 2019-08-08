@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<body>
+    {% if user.is_authenticated %}
+    Hi {{ user.username }}!
+    <p><a href="{% url 'logout' %}">logout</a></p>
+    {% else %}
+    <p>You are not logged in</p>
+    <a href="{% url 'login' %}">login</a> 
+    <a href="{% url 'signup' %}">signup</a>
+    {% endif %}
+    <div>
+        <input type="button" value="호스팅하기" onclick="location.href='{% url 'hosting1' %}'">
+        <input type="button" value="둘러보기" onclick="location.href='{% url 'condition' %}'">
+    </div>
+</body>
+</html>

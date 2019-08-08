@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" action="{% url 'sendMessage' %}">
+        {% csrf_token %}
+        <input type="hidden" name="sender" value="{{user.username}}">
+        받는 사람: <input type="hidden" name="receiver" value="{{receiver}}"> {{receiver}}
+        <br>
+        내용:<br>
+        <textarea cols=30 rows=10 name="body"></textarea>
+        <input type="submit" value="보내기">
+    </form>
+</body>
+</html>

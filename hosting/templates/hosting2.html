@@ -1,0 +1,402 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <!-- 스타일 태그 부분은 별도의 css 파일로 나중에 옮겨주기! -->
+    <style>
+        button{
+            cursor: pointer;
+        }
+        @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+        @import url('https://fonts.googleapis.com/css?family=Raleway');
+
+        // variables
+        $base-color: cadetblue;
+        $base-font: 'Raleway', sans-serif;
+
+        body {
+        font-family: $base-font;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background-color: lighten($base-color, 45%);
+        }
+
+        .wrapper{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        }
+
+        h1 {
+        font-family: inherit;
+        margin: 0 0 .75em 0;
+        color: desaturate($base-color, 15%);
+        text-align: center;
+        }
+
+        .box {
+        display: block;
+        min-width: 300px;
+        height: 300px;
+        margin: 10px;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        overflow: hidden;
+        }
+
+        .upload-options {
+        position: relative;
+        height: 75px;
+        background-color: $base-color;
+        cursor: pointer;
+        overflow: hidden;
+        text-align: center;
+        transition: background-color ease-in-out 150ms;
+        }
+
+        &:hover {
+            background-color: lighten($base-color, 10%);
+        }
+
+        & input {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+        }
+
+        & label {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        font-weight: 400;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor: pointer;
+        overflow: hidden;
+        }
+
+        &::after {
+        content: 'add'; 
+        font-family: 'Material Icons';
+        position: absolute;
+        font-size: 2.5rem;
+        color: green;
+        top: calc(50% - 2.5rem);
+        left: calc(50% - 1.25rem);
+        z-index: 0;
+        }
+
+        & span {
+        display: inline-block;
+        width: 50%;
+        height: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        vertical-align: middle;
+        text-align: center;
+        }
+
+        &:hover i.material-icons {
+            color: lightgray;        
+        }
+        }
+    }
+        }
+
+        .js--image-preview {
+        height: 225px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        background-image: url('https://www.tourniagara.com/wp-content/uploads/2014/10/default-img.gif');
+        background-color: white;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        }
+
+            &::after {
+            content: "photo_size_select_actual"; 
+            font-family: 'Material Icons';
+            position: relative;
+            font-size: 4.5em;
+            color: rgba(230, 230, 230, 1);
+            top: calc(50% - 3rem);
+            left: calc(50% - 2.25rem);
+            z-index: 0;
+            }
+
+        &.js--no-default::after {
+        display: none;
+        }
+
+        &:nth-child(2) {
+        background-image: url('http://bastianandre.at/giphy.gif');
+        }
+        }
+
+        i.material-icons {
+        transition: color 100ms ease-in-out;
+        font-size: 2.25em;
+        line-height: 55px;
+        color: white;
+        display: block;
+        }
+
+        .drop {
+        display: block;
+        position: absolute;
+        background: transparentize($base-color, .8);
+        border-radius: 100%;
+        transform:scale(0);
+        }
+
+        .animate {
+        animation: ripple 0.4s linear;
+        }
+
+        @keyframes ripple {
+            100% {opacity: 0; transform: scale(2.5);}
+        }
+
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="jquery.min.js" charset="euc-kr"></script>
+
+    <script type="text/javascript">
+       function rtypeFunc(){
+     var a = document.getElementByID("tmpRtype").value;
+    var str = "";
+
+  switch(a){
+    case 1:
+      str += '<input type="text" id="cost" name="cost" placeholder="금액" required/>만원/';
+      str += '<input type="text" id="deposit" name="deposit" placeholder="보증금"/>';       
+      str += "<h5>월세 또는 전세 가격을 만원 단위로 입력해주세요</h5>";       
+      document.getElementById("rtype_append").innerHTML = str; 
+      break;
+    case 2:
+      str += '<input type="text" id="cost1" name="cost" onkeypress="dayOrMonth(1)" placeholder="금액"/>만원/Day';
+      str += '<input type="text" id="cost2" name="cost" onkeypress="dayOrMonth(1)" placeholder="금액"/>만원/Month';       
+      str += "<h5>장기대여 기간에 따라 적절한 금액 제시 기준을 선택하세요! 하루 단위 또는 월 단위로 계산할 수 있습니다</h5>;       
+      document.getElementById("rtype_append").innerHTML = str; 
+      break;
+      }
+}
+      window.onload=rtypeFunc;
+     </script>
+
+    <title>Document</title>
+</head>
+
+<body>
+<div class="container">
+
+    <form method="post" action="{% url 'create2' %}" enctype="multipart/form-data">{% csrf_token %}
+        <input type="hidden" name="room_obj" value="{{current_room}}">
+        
+        
+        <div class="item">
+          <div class="title">4. 사진</div><br>
+            <div class="wrapper">
+            <div class="box">
+                <div class="js--image-preview"></div>
+                <div class="upload-options">
+                <label>
+                    <input type="file" name = "thumb1" class="image-upload" accept="image/*" required/>
+                </label>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="js--image-preview"></div>
+                <div class="upload-options">
+                <label>
+                    <input type="file" name = "thumb2" class="image-upload" accept="image/*" />
+                </label>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="js--image-preview"></div>
+                <div class="upload-options">
+                <label>
+                    <input type="file" name = "thumb3" class="image-upload" accept="image/*" />
+                </label>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="title">5. 세부 소개</div><br>
+            <input type="text" name="title"><br>
+            <input type="text" name="details" cols=300 rows=100/><br>
+        </div>
+        <div class="item">
+          <table>
+            <tr>
+              <td>
+                <div class="title">금액</div>
+              </td>
+              <td>
+                <input type="hidden" id="tmpRtype" value = {{rtype}}>
+                <div id="cost_append"></div>
+                
+                {% if rtype == 1 %}
+                <input type="text" id="cost" name="cost" placeholder="금액" required/>만원/
+                <input type="text" id="deposit" name="deposit" placeholder="보증금"/>
+                <h5>월세 또는 전세 가격을 만원 단위로 입력해주세요</h5>
+                {% endif %}
+                {% if rtype == 2 %}
+                <input type="text" id="cost1" name="cost" onkeypress="dayOrMonth(1)" placeholder="금액"/>만원/Day
+                <input type="text" id="cost2" name="cost" onkeypress="dayOrMonth(1)" placeholder="금액"/>만원/Month
+                <h5>장기대여 기간에 따라 적절한 금액 제시 기준을 선택하세요! 하루 단위 또는 월 단위로 계산할 수 있습니다</h5>
+                {% endif %}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="title">기간</div>
+              </td>
+              <td>
+                <input type="date" name="start_date" required/>	
+                &#32;&#126;&#32;
+                <input type="date" name="end_date" required/>
+              </td>
+            </tr>
+          </table>
+        </div>
+           
+
+        <br><br>
+        <button class="btn bnt-action" type="submit" value="upload">올리기</button>
+    </form> 
+</div><!--container-->
+</body>
+
+
+<script type="text/javascript">
+    function initImageUpload(box) {
+  let uploadField = box.querySelector('.image-upload');
+
+  uploadField.addEventListener('change', getFile);
+
+  function getFile(e){
+    let file = e.currentTarget.files[0];
+    checkType(file);
+  }
+  
+  function previewImage(file){
+    let thumb = box.querySelector('.js--image-preview'),
+        reader = new FileReader();
+
+    reader.onload = function() {
+      thumb.style.backgroundImage = 'url(' + reader.result + ')';
+    }
+    reader.readAsDataURL(file);
+    thumb.className += ' js--no-default';
+  }
+
+  function checkType(file){
+    let imageType = /image.*/;
+    if (!file.type.match(imageType)) {
+      throw 'Datei ist kein Bild';
+    } else if (!file){
+      throw 'Kein Bild gewählt';
+    } else {
+      previewImage(file);
+    }
+  }
+  
+}
+
+// initialize box-scope
+var boxes = document.querySelectorAll('.box');
+
+for (let i = 0; i < boxes.length; i++) {
+  let box = boxes[i];
+  initDropEffect(box);
+  initImageUpload(box);
+}
+
+
+
+/// drop-effect
+function initDropEffect(box){
+  let area, drop, areaWidth, areaHeight, maxDistance, dropWidth, dropHeight, x, y;
+  
+  // get clickable area for drop effect
+  area = box.querySelector('.js--image-preview');
+  area.addEventListener('click', fireRipple);
+  
+  function fireRipple(e){
+    area = e.currentTarget
+    // create drop
+    if(!drop){
+      drop = document.createElement('span');
+      drop.className = 'drop';
+      this.appendChild(drop);
+    }
+    // reset animate class
+    drop.className = 'drop';
+    
+    // calculate dimensions of area (longest side)
+    areaWidth = getComputedStyle(this, null).getPropertyValue("width");
+    areaHeight = getComputedStyle(this, null).getPropertyValue("height");
+    maxDistance = Math.max(parseInt(areaWidth, 10), parseInt(areaHeight, 10));
+
+    // set drop dimensions to fill area
+    drop.style.width = maxDistance + 'px';
+    drop.style.height = maxDistance + 'px';
+    
+    // calculate dimensions of drop
+    dropWidth = getComputedStyle(this, null).getPropertyValue("width");
+    dropHeight = getComputedStyle(this, null).getPropertyValue("height");
+    
+    // calculate relative coordinates of click
+    // logic: click coordinates relative to page - parent's position relative to page - half of self height/width to make it controllable from the center
+    x = e.pageX - this.offsetLeft - (parseInt(dropWidth, 10)/2);
+    y = e.pageY - this.offsetTop - (parseInt(dropHeight, 10)/2) - 30;
+    
+    // position drop and animate
+    drop.style.top = y + 'px';
+    drop.style.left = x + 'px';
+    drop.className += ' animate';
+    e.stopPropagation();
+    
+  }
+}
+
+</script>
+<footer>
+
+{% endblock %}

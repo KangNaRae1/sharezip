@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>쪽지함</h1>
+    --------------------------
+    {% for who, body in message %}
+    <div>
+    <strong><a href="{% url 'mdetail' user.username who %}">{{who}}</a></strong>
+    {% for i in body %}
+    {{i}}<br>
+    {% endfor %}
+    --------------------------
+    </div>
+    {% endfor %}
+</body>
+</html>

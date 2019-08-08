@@ -1,0 +1,119 @@
+{% block content %}
+{% endblock %}
+<!DOCTYPE html>
+
+<head>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      border: 1px solid #ddd;
+    }
+
+    /* 버튼 클릭시 색 변경 a.active-color { color:#003b8d; } */
+    /* The switch - the box around the slider */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    /* The slider */
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked+.slider {
+      background-color: #2196F3;
+    }
+
+    input:focus+.slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked+.slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+
+    img {
+      float: left;
+      width: 33.3%;
+      height: 400px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    {% csrf_token %}
+    <div>
+      <img src="{{room.image1.url}}">
+      {% if room.image2 %}
+      <img src="{{room.image2.url}}">
+      {% else %}
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_iwaBLs4FNnxUv60KBG1Sq2HxqEC1GLRK9z7qT8flk9oFkrq4">
+      {% endif %}
+
+      {% if room.image3 %}
+      <img src="{{room.image3.url}}">
+      {% else %}
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_iwaBLs4FNnxUv60KBG1Sq2HxqEC1GLRK9z7qT8flk9oFkrq4">
+      {% endif %}
+    </div>
+    <br><br>
+    {{room.addr_gu}} {{room.addr_dong}}<br>
+    입주가능 기간: {{room.start_date}} 부터 {{room.end_date}}까지 <br>
+    {{room.pPeriod}}{{room.pCost}}<br>
+    {{room.pRentType}}<br>
+    {{room.pGender}}<br>
+    {{room.pBuildingType}}<br>
+    {{room.detail}}<br><br>
+    <a href="{% url 'findroom' %}">뒤로가기</a>
+    <a href="{% url 'new' room.creator %}">쪽지보내기</a>
+</body>

@@ -1,0 +1,132 @@
+<!-- Header -->
+<header class="w3-display-container w3-content" style="max-width:1500px;">
+  <img class="w3-image" src="/w3images/hotel.jpg" alt="The Hotel" style="min-width:1000px" width="1500" height="800">
+  <div class="w3-display-left w3-padding w3-col l6 m8">
+    <div class="w3-container w3-red">
+      <h2><i class="fa fa-bed w3-margin-right"></i>조건을 선택하세요</h2>
+    </div>
+    <div class="w3-container w3-white w3-padding-30">
+      <form action="/action_page.php" target="_blank">
+        <div class="w3-row-padding" style="margin:0 -16px;">
+          <div class="w3-half w3-margin-bottom">
+            <label><i class="fa fa-calendar-o"></i> Check In</label>
+            <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY" name="CheckIn" required>
+          </div>
+          <div class="w3-half">
+            <label><i class="fa fa-calendar-o"></i> Check Out</label>
+            <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY" name="CheckOut" required>
+          </div>
+        </div>
+        <div class="w3-row-padding" style="margin:8px -16px;">
+          <div class="w3-half w3-margin-bottom">
+            <label><i class="fa fa-male"></i> Adults</label>
+            <input class="w3-input w3-border" type="number" value="1" name="Adults" min="1" max="6">
+          </div>
+          <div class="w3-half">
+            <label><i class="fa fa-child"></i> Kids</label>
+          <input class="w3-input w3-border" type="number" value="0" name="Kids" min="0" max="6">
+          </div>
+        </div>
+        <button class="w3-button w3-dark-grey" type="submit"><i class="fa fa-search w3-margin-right"></i> Search availability</button>
+      </form>
+    </div>
+  </div>
+</header>
+
+
+
+
+<body>
+    <div class="item">
+    <div class="col-md-8 order-md-1">
+
+    <form action="{% url 'result' %}">
+        <div>
+            <button type="button" class="btn btn-outline-secondary" id="but1" value="1" onclick="selectedButton(this)">양도</button>
+            <button type="button" class="btn btn-outline-secondary" id="but2" value="2" onclick="selectedButton(this)">장기대여</button>
+            <button type="button" class="btn btn-outline-secondary" id="but3" value="3" onclick="selectedButton(this)">룸메이트</button>
+            <input type="hidden" id="condition" name="condition">
+        </div>
+        <br>
+
+        <div>
+            <strong>희망날짜</strong><br>
+            <input type="date" name="start">부터 <input type="date" name="end">까지
+        </div>
+        <br>
+
+        <div>
+            <strong>위치</strong><br>
+            <select name="gu" id="gu" oninput="dongOption()" onchange="changeRange()">
+                <option selected disabled hidden>지역구</option>
+                <option value="강남구">강남구</option>
+                <option value="강동구">강동구</option>
+                <option value="강북구">강북구</option>
+                <option value="강서구">강서구</option>
+                <option value="관악구">관악구</option>
+                <option value="광진구">광진구</option>
+                <option value="구로구">구로구</option>
+                <option value="금천구">금천구</option>
+                <option value="노원구">노원구</option>
+                <option value="도봉구">도봉구</option>
+                <option value="동대문구">동대문구</option>
+                <option value="동작구">동작구</option>
+                <option value="마포구">마포구</option>
+                <option value="서대문구">서대문구</option>
+                <option value="서초구">서초구</option>
+                <option value="성동구">성동구</option>
+                <option value="성북구">성북구</option>
+                <option value="송파구">송파구</option>
+                <option value="양천구">양천구</option>
+                <option value="영등포구">영등포구</option>
+                <option value="용산구">용산구</option>
+                <option value="은평구">은평구</option>
+                <option value="종로구">종로구</option>
+                <option value="중구">중구</option>
+                <option value="중랑구">중랑구</option>
+            </select>
+            <select name="dong", id="dong">
+                <option selected disabled hidden>동</option>
+            </select>
+        </div>
+        <br>
+
+        <div>
+            <strong>성별</strong><br>
+            <select name="gender">
+                <option value="male">남</option>
+                <option value="female">여</option>
+            </select>
+        </div>
+        <br>
+
+        <div>
+            <strong>주거유형</strong><br>
+            <select name="type">
+                <option value="apart">아파트</option>
+                <option value="officetel">오피스텔</option>
+                <option value="villa">빌라</option>
+            </select>
+        </div>
+        <br>
+
+        <div>
+            <strong>희망금액</strong><br>
+            <select name="rent" id="rent" onchange="changeRange()">
+                <option selected disabled hidden>선택</option>
+            </select>
+            <span id="cost">0만원</span><br>
+            <input type="range" name="cost" id="c_slider" min="0" max="100" value="0" oninput="numToKor(1)">
+
+            <div id="hello" style="visibility:hidden;">
+                <br><strong>보증금</strong>
+                <span id="deposit"> 0만원</span><br>
+                <input type="range" name="deposit" id="d_slider" min="0" max="1000" step="100" value="0" oninput="numToKor(2)">
+            </div>
+        </div>
+        <br>
+
+        <div>
+            <input type="submit" value="검색하기">
+        </div>
+    </form>

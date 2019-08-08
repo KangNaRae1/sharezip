@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    {% if user!=user.username %}
+    접근할 수 없습니다
+    {% else %}
+    <strong>{{other}}</strong>
+    <a href="{% url 'new' other %}">쪽지보내기</a>
+    <br><br>
+    --------------------------
+    {% for i in message %}
+    <div>
+    {% for j in i %}
+    {{j}}<br>
+    {% endfor %}
+    --------------------------
+    </div>
+    {% endfor %}
+    {% endif %}
+</body>
+</html>
